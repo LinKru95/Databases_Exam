@@ -25,6 +25,30 @@ namespace Databases_Exam
         {
             _dbContext.Students.Add(student);
         }
+        public List<Department> RetrieveDepartments()
+        {
+            return _dbContext.Departments.ToList();
+        }
+        public Department RetrieveDepartmentById(int id)
+        {
+            return _dbContext.Departments.First(x => x.Id == id);
+        }
+        public List<Lecture> RetrieveLectures()
+        {
+            return _dbContext.Lectures.ToList();
+        }
+        public Lecture RetrieveLectureById(int id)
+        {
+            return _dbContext.Lectures.First(x => x.Id == id);
+        }
+        public List<Student> RetrieveStudents()
+        {
+            return _dbContext.Students.ToList();
+        }
+        public Student RetrieveStudentById(int id)
+        {
+            return _dbContext.Students.First(x => x.Id == id);
+        }
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
