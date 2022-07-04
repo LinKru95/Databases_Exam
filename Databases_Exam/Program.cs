@@ -6,7 +6,7 @@ namespace Databases_Exam
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
