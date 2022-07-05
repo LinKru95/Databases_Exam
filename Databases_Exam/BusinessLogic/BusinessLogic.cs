@@ -67,5 +67,36 @@ namespace Databases_Exam
 
             _repository.SaveChanges();
         }
+        public void AssignDepartmentToStudent(int departmentId, int studentId)
+        {
+            Department department = _repository.RetrieveDepartmentById(departmentId);
+            Student student = _repository.RetrieveStudentById(studentId);
+
+            student.Department = department;
+
+            AssignAllDepatmentLecturesToStudent(student, department);
+
+            _repository.SaveChanges();
+        }
+        public void AssignStudentToLecture(int studentId, int lectureId)
+        {
+            Student student = _repository.RetrieveStudentById(studentId);
+            Lecture lecture = _repository.RetrieveLectureById(lectureId);
+
+            student.Lectures.Add(lecture);
+
+            _repository.SaveChanges();
+        }
+        public void AssignAllDepatmentLecturesToStudent(Student student, Department department)
+        {
+            student.Lectures.Clear();
+
+            foreach (var lecture in department.Lectures)
+            {
+                student.Lectures.Add(lecture);
+            }
+
+            _repository.SaveChanges();
+        }
     }
 }

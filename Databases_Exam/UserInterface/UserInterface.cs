@@ -36,7 +36,7 @@ namespace Databases_Exam
                         break;
                     case "2":
                         Console.Clear();
-                        ShowEntities();
+                        ShowAllEntities();
                         break;
                     case "3":
                         Console.Clear();
@@ -44,7 +44,7 @@ namespace Databases_Exam
                         break;
                     case "4":
                         Console.Clear();
-                        
+                        Assign();
                         break;
                     case "5":
                         Console.Clear();
@@ -106,7 +106,7 @@ namespace Databases_Exam
                 }
             }
         }
-        public void ShowEntities()
+        public void ShowAllEntities()
         {
             bool repeat = true;
             string userInput;
@@ -149,7 +149,90 @@ namespace Databases_Exam
         }
         public void Assign()
         {
+            bool repeat = true;
+            string userInput;
 
+            while (repeat)
+            {
+                Console.Clear();
+                Console.WriteLine("Select what do you want to assign:\n[1]-Department to lecture\n[2]-Department to student\n[3]-Student to lecture\n[4]-Return");
+                userInput = Console.ReadLine();
+
+                int departmentId;
+                int lectureId;
+                int studentId;
+
+                switch (userInput)
+                {
+                    case "1":
+                        Console.Clear();
+                        Console.WriteLine("Enter department's ID:");
+
+                        _businessLogic.ShowDepartments();
+                        Console.WriteLine();
+
+                        departmentId = Int32.Parse(Console.ReadLine());
+
+                        Console.Clear();
+                        Console.WriteLine("Enter lecture's ID:");
+
+                        _businessLogic.ShowLectures();
+                        Console.WriteLine();
+
+                        lectureId = Int32.Parse(Console.ReadLine());
+
+                        _businessLogic.AssignDepartmentToLecture(departmentId, lectureId);
+                        break;
+                    case "2":
+
+                        Console.Clear();
+                        Console.WriteLine("Enter department's ID:");
+
+                        _businessLogic.ShowDepartments();
+                        Console.WriteLine();
+
+                        departmentId = Int32.Parse(Console.ReadLine());
+
+                        Console.Clear();
+                        Console.WriteLine("Enter student's ID:");
+
+                        _businessLogic.ShowStudents();
+                        Console.WriteLine();
+
+                        studentId = Int32.Parse(Console.ReadLine());
+
+                        _businessLogic.AssignDepartmentToStudent(departmentId, studentId);
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.WriteLine("Enter student's ID:");
+
+                        _businessLogic.ShowStudents();
+                        Console.WriteLine();
+
+                        studentId = Int32.Parse(Console.ReadLine());
+
+                        Console.Clear();
+                        Console.WriteLine("Enter lecture's ID:");
+
+                        _businessLogic.ShowLectures();
+                        Console.WriteLine();
+
+                        lectureId = Int32.Parse(Console.ReadLine());
+
+                        _businessLogic.AssignStudentToLecture(studentId, lectureId);
+                        break;
+                    case "4":
+                        Console.Clear();
+                        repeat = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Wrong input, try again");
+                        Console.ReadLine();
+                        break;
+                }
+            }
         }
     }
 }

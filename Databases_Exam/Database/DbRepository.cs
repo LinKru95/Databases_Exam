@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Databases_Exam
         }
         public Department RetrieveDepartmentById(int id)
         {
-            return _dbContext.Departments.First(x => x.Id == id);
+            return _dbContext.Departments.Include(x => x.Lectures).Include(x => x.Students).FirstOrDefault(x => x.Id == id);
         }
         public List<Lecture> RetrieveLectures()
         {
@@ -39,7 +40,7 @@ namespace Databases_Exam
         }
         public Lecture RetrieveLectureById(int id)
         {
-            return _dbContext.Lectures.First(x => x.Id == id);
+            return _dbContext.Lectures.Include(x => x.Departments).Include(x => x.Students).FirstOrDefault(x => x.Id == id);
         }
         public List<Student> RetrieveStudents()
         {
@@ -47,7 +48,7 @@ namespace Databases_Exam
         }
         public Student RetrieveStudentById(int id)
         {
-            return _dbContext.Students.First(x => x.Id == id);
+            return _dbContext.Students.Include(x => x.Lectures).FirstOrDefault(x => x.Id == id);
         }
         public void SaveChanges()
         {

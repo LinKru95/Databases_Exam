@@ -13,7 +13,10 @@ namespace Databases_Exam
         public int Age { get; set; }
         public Department Department { get; set; }
         public List<Lecture> Lectures { get; set; }
-        private Student() { }
+        private Student() 
+        {
+            Lectures = new List<Lecture>();
+        }
         public Student(string name, int age)
         {
             Name = name;

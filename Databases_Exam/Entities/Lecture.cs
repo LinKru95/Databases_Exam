@@ -12,7 +12,11 @@ namespace Databases_Exam
         public string Name { get; set; }
         public int Credits { get; set; }
         public List<Department> Departments { get; set; }
-        private Lecture() { }
+        public List<Student> Students { get; set; }
+        private Lecture() 
+        {
+            Departments = new List<Department>();
+        }
         public Lecture(string name, int credits)
         {
             Name = name;
