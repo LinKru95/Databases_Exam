@@ -26,9 +26,21 @@ namespace Databases_Exam
         {
             _dbContext.Students.Add(student);
         }
+        public void DeleteDepartment(Department department)
+        {
+            _dbContext.Departments.Remove(department);
+        }
+        public void DeleteLecture(Lecture lecture)
+        {
+            _dbContext.Lectures.Remove(lecture);
+        }
+        public void DeleteStudent(Student student)
+        {
+            _dbContext.Students.Remove(student);
+        }
         public List<Department> RetrieveDepartments()
         {
-            return _dbContext.Departments.ToList();
+            return _dbContext.Departments.Include(x => x.Lectures).Include(x => x.Students).ToList();
         }
         public Department RetrieveDepartmentById(int id)
         {
@@ -36,7 +48,7 @@ namespace Databases_Exam
         }
         public List<Lecture> RetrieveLectures()
         {
-            return _dbContext.Lectures.ToList();
+            return _dbContext.Lectures.Include(x => x.Departments).Include(x => x.Students).ToList();
         }
         public Lecture RetrieveLectureById(int id)
         {
@@ -44,7 +56,7 @@ namespace Databases_Exam
         }
         public List<Student> RetrieveStudents()
         {
-            return _dbContext.Students.ToList();
+            return _dbContext.Students.Include(x => x.Lectures).ToList();
         }
         public Student RetrieveStudentById(int id)
         {

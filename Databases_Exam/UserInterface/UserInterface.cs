@@ -14,7 +14,7 @@ namespace Databases_Exam
             _businessLogic = new BusinessLogic();
         }
 
-        public void Control()
+        public void Controls()
         {
             Console.WriteLine("Welcome to students info system");
             Console.ReadLine();
@@ -25,7 +25,7 @@ namespace Databases_Exam
             while (repeat)
             {
                 Console.Clear();
-                Console.WriteLine("MENIU\n[1]-Add\n[2]-Show All\n[3]-Show By\n[4]-Assign\n[5]-Exit");
+                Console.WriteLine("MENIU\n[1]-Add\n[2]-Show All\n[3]-Show By\n[4]-Assign\n[5]-Delete\n[6]-Exit");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -40,13 +40,17 @@ namespace Databases_Exam
                         break;
                     case "3":
                         Console.Clear();
-                        
+                        ShowBy();
                         break;
                     case "4":
                         Console.Clear();
                         Assign();
                         break;
                     case "5":
+                        Console.Clear();
+                        Delete();
+                        break;
+                    case "6":
                         Console.Clear();
                         repeat = false;
                         break;
@@ -147,6 +151,106 @@ namespace Databases_Exam
                 }
             }
         }
+        public void ShowBy()
+        {
+            bool repeat = true;
+            string userInput;
+
+            while (repeat)
+            {
+                Console.Clear();
+                Console.WriteLine("Select what do you want to see:\n[1]-Departments by lecture\n[2]-Department by student\n[3]-Lectures by department\n[4]-Lectures by student\n[5]-Students by department\n[6]-Students by lecture\n[7]-Return");
+                userInput = Console.ReadLine();
+
+                int departmentId;
+                int lectureId;
+                int studentId;
+
+                switch (userInput)
+                {
+                    case "1":
+                        Console.Clear();
+
+                        lectureId = GetLectureId();
+
+                        Console.Clear();
+
+                        _businessLogic.ShowDepartmentsByLecture(lectureId);
+
+                        Console.ReadLine();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.WriteLine("Enter student's ID:");
+
+                        _businessLogic.ShowStudents();
+
+                        Console.WriteLine();
+
+                        studentId = Int32.Parse(Console.ReadLine());
+
+                        Console.Clear();
+
+                        _businessLogic.ShowDepartmentByStudent(studentId);
+
+                        Console.ReadLine();
+                        break;
+                    case "3":
+                        Console.Clear();
+
+                        departmentId = GetDepartmentId();
+
+                        Console.Clear();
+
+                        _businessLogic.ShowLecturesByDepartment(departmentId);
+
+                        Console.ReadLine();
+                        break;
+                    case "4":
+                        Console.Clear();
+
+                        studentId = GetStudentId();
+
+                        Console.Clear();
+
+                        _businessLogic.ShowLecturesByStudent(studentId);
+
+                        Console.ReadLine();
+                        break;
+                    case "5":
+                        Console.Clear();
+
+                        departmentId = GetDepartmentId();
+
+                        Console.Clear();
+
+                        _businessLogic.ShowStudentsByDepartment(departmentId);
+
+                        Console.ReadLine();
+                        break;
+                    case "6":
+                        Console.Clear();
+
+                        lectureId = GetLectureId();
+
+                        Console.Clear();
+
+                        _businessLogic.ShowStudentsByLecture(lectureId);
+
+                        Console.ReadLine();
+                        break;
+                    case "7":
+                        Console.Clear();
+                        repeat = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Wrong input, try again");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+        }
         public void Assign()
         {
             bool repeat = true;
@@ -166,59 +270,34 @@ namespace Databases_Exam
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("Enter department's ID:");
 
-                        _businessLogic.ShowDepartments();
-                        Console.WriteLine();
-
-                        departmentId = Int32.Parse(Console.ReadLine());
+                        departmentId = GetDepartmentId();
 
                         Console.Clear();
-                        Console.WriteLine("Enter lecture's ID:");
 
-                        _businessLogic.ShowLectures();
-                        Console.WriteLine();
-
-                        lectureId = Int32.Parse(Console.ReadLine());
+                        lectureId = GetLectureId();
 
                         _businessLogic.AssignDepartmentToLecture(departmentId, lectureId);
                         break;
                     case "2":
+                        Console.Clear();
+
+                        departmentId = GetDepartmentId();
 
                         Console.Clear();
-                        Console.WriteLine("Enter department's ID:");
 
-                        _businessLogic.ShowDepartments();
-                        Console.WriteLine();
-
-                        departmentId = Int32.Parse(Console.ReadLine());
-
-                        Console.Clear();
-                        Console.WriteLine("Enter student's ID:");
-
-                        _businessLogic.ShowStudents();
-                        Console.WriteLine();
-
-                        studentId = Int32.Parse(Console.ReadLine());
+                        studentId = GetStudentId();
 
                         _businessLogic.AssignDepartmentToStudent(departmentId, studentId);
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine("Enter student's ID:");
 
-                        _businessLogic.ShowStudents();
-                        Console.WriteLine();
-
-                        studentId = Int32.Parse(Console.ReadLine());
+                        studentId = GetStudentId();
 
                         Console.Clear();
-                        Console.WriteLine("Enter lecture's ID:");
 
-                        _businessLogic.ShowLectures();
-                        Console.WriteLine();
-
-                        lectureId = Int32.Parse(Console.ReadLine());
+                        lectureId = GetLectureId();
 
                         _businessLogic.AssignStudentToLecture(studentId, lectureId);
                         break;
@@ -233,6 +312,88 @@ namespace Databases_Exam
                         break;
                 }
             }
+        }
+        public void Delete()
+        {
+            bool repeat = true;
+            string userInput;
+
+            while (repeat)
+            {
+                Console.Clear();
+                Console.WriteLine("Select what do you want to delete:\n[1]-Department\n[2]-Lecture\n[3]-Student\n[4]-Return");
+                userInput = Console.ReadLine();
+
+                int departmentId;
+                int lectureId;
+                int studentId;
+
+                switch (userInput)
+                {
+                    case "1":
+                        Console.Clear();
+
+                        departmentId = GetDepartmentId();
+
+                        _businessLogic.DeleteDepartment(departmentId);
+
+                        break;
+                    case "2":
+                        Console.Clear();
+
+                        lectureId = GetLectureId();
+
+                        _businessLogic.DeleteLecture(lectureId);
+
+                        break;
+                    case "3":
+                        Console.Clear();
+
+                        studentId = GetStudentId();
+
+                        _businessLogic.DeleteStudent(studentId);
+
+                        break;
+                    case "4":
+                        Console.Clear();
+                        repeat = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Wrong input, try again");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+        }
+        public int GetDepartmentId()
+        {
+            Console.WriteLine("Enter department's ID:");
+
+            _businessLogic.ShowDepartments();
+
+            Console.WriteLine();
+
+            return Int32.Parse(Console.ReadLine());
+        }
+        public int GetLectureId()
+        {
+            Console.WriteLine("Enter lecture's ID:");
+
+            _businessLogic.ShowLectures();
+
+            Console.WriteLine();
+
+            return Int32.Parse(Console.ReadLine());
+        }
+        public int GetStudentId()
+        {
+            Console.WriteLine("Enter student's ID:");
+
+            _businessLogic.ShowStudents();
+            Console.WriteLine();
+
+            return Int32.Parse(Console.ReadLine());
         }
     }
 }

@@ -37,25 +37,112 @@ namespace Databases_Exam
         public void ShowDepartments()
         {
             Console.WriteLine("Department's ID, Name:");
+
             foreach (var department in _repository.RetrieveDepartments())
             {
                 Console.WriteLine($"{department.Id}, {department.Name}");
             }            
         }
+        public void ShowDepartmentsByLecture(int lectureId)
+        {
+            Lecture lecture = _repository.RetrieveLectureById(lectureId);
+
+            Console.WriteLine("Department's ID, Name:");
+
+            foreach (var department in _repository.RetrieveDepartments())
+            {
+                if (department.Lectures.Contains(lecture))
+                {
+                    Console.WriteLine($"{department.Id}, {department.Name}");
+                }                
+            }
+        }
+        public void ShowDepartmentByStudent(int studentId)
+        {
+            Student student = _repository.RetrieveStudentById(studentId);
+
+            Console.WriteLine("Department's ID, Name:");
+
+            foreach (var department in _repository.RetrieveDepartments())
+            {
+                if (department.Students.Contains(student))
+                {
+                    Console.WriteLine($"{department.Id}, {department.Name}");
+                }
+            }
+        }
         public void ShowLectures()
         {
             Console.WriteLine("Lecture's ID, Name, No. of credits:");
+
             foreach (var lecture in _repository.RetrieveLectures())
             {
                 Console.WriteLine($"{lecture.Id}, {lecture.Name}, {lecture.Credits}");
             }
         }
+        public void ShowLecturesByDepartment(int departmentId)
+        {
+            Department department = _repository.RetrieveDepartmentById(departmentId);
+
+            Console.WriteLine("Lecture's ID, Name, No. of credits:");
+
+            foreach (var lecture in _repository.RetrieveLectures())
+            {
+                if (lecture.Departments.Contains(department))
+                {
+                    Console.WriteLine($"{lecture.Id}, {lecture.Name}, {lecture.Credits}");
+                }              
+            }
+        }
+        public void ShowLecturesByStudent(int studentId)
+        {
+            Student student = _repository.RetrieveStudentById(studentId);
+
+            Console.WriteLine("Lecture's ID, Name, No. of credits:");
+
+            foreach (var lecture in _repository.RetrieveLectures())
+            {
+                if (lecture.Students.Contains(student))
+                {
+                    Console.WriteLine($"{lecture.Id}, {lecture.Name}, {lecture.Credits}");
+                }
+            }
+        }
         public void ShowStudents()
         {
             Console.WriteLine("Student's ID, Name, Age:");
+
             foreach (var student in _repository.RetrieveStudents())
             {
                 Console.WriteLine($"{student.Id}, {student.Name}, {student.Age}");
+            }
+        }
+        public void ShowStudentsByDepartment(int departmentId)
+        {
+            Department department = _repository.RetrieveDepartmentById(departmentId);
+
+            Console.WriteLine("Student's ID, Name, Age:");
+
+            foreach (var student in _repository.RetrieveStudents())
+            {
+                if (student.Department == department)
+                {
+                    Console.WriteLine($"{student.Id}, {student.Name}, {student.Age}");
+                }              
+            }
+        }
+        public void ShowStudentsByLecture(int lectureId)
+        {
+            Lecture lecture = _repository.RetrieveLectureById(lectureId);
+
+            Console.WriteLine("Student's ID, Name, Age:");
+
+            foreach (var student in _repository.RetrieveStudents())
+            {
+                if (student.Lectures.Contains(lecture))
+                {
+                    Console.WriteLine($"{student.Id}, {student.Name}, {student.Age}");
+                }
             }
         }
         public void AssignDepartmentToLecture(int departmentId, int lectureId)
@@ -95,6 +182,30 @@ namespace Databases_Exam
             {
                 student.Lectures.Add(lecture);
             }
+
+            _repository.SaveChanges();
+        }
+        public void DeleteDepartment(int departmentId)
+        {
+            Department department = _repository.RetrieveDepartmentById(departmentId);
+
+            _repository.DeleteDepartment(department);
+
+            _repository.SaveChanges();
+        }
+        public void DeleteLecture(int lectureId)
+        {
+            Lecture lecture = _repository.RetrieveLectureById(lectureId);
+
+            _repository.DeleteLecture(lecture);
+
+            _repository.SaveChanges();
+        }
+        public void DeleteStudent(int studentId)
+        {
+            Student student = _repository.RetrieveStudentById(studentId);
+
+            _repository.DeleteStudent(student);
 
             _repository.SaveChanges();
         }
