@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Databases_Exam
 {
-    public class Lecture
+    public class Lecture : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public int Credits { get; set; }
         public List<Department> Departments { get; set; }
         public List<Student> Students { get; set; }
